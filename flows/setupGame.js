@@ -5,8 +5,8 @@ const setupGame = () => {
     const game = {
         playerOne: {name: 'Player 1', sign: 'X', holder: 1},
         playerTwo: {name: 'Player 2', sign: 'O', holder: -1},
-        boardSize: 3,
-        patternLength: 3,
+        boardSize: MIN_BOARD_SIZE,
+        patternLength: MIN_BOARD_SIZE,
     }
 
     return interface.question({
@@ -25,13 +25,13 @@ const setupGame = () => {
             game.playerTwo.name = response
         }
         return interface.question({
-            body: 'Enter board size (Minimum 3):',
+            body: `Enter board size (Min. ${MIN_BOARD_SIZE}):`,
             defaults: game.boardSize,
             isNumber: true,
         })
     }).then((response) => {
-        if (response && response < 3) {
-            interface.prompt('Board size less than 3 not supported!')
+        if (response && response < MIN_BOARD_SIZE) {
+            interface.prompt(`Board size less than ${MIN_BOARD_SIZE} not supported!`)
             return Promise.reject()
         }
         if (response) {
@@ -39,6 +39,20 @@ const setupGame = () => {
         }
 
         game.board = initBoard(game.boardSize)
+
+        return interface.question({
+            body: `Enter winning pattern length (Min. ${MIN_BOARD_SIZE}, Max. ${game.boardSize}):`,
+            defaults: game.patternLength,
+            isNumber: true,
+        })
+    }).then((response) => {
+        if (response && (response < MIN_BOARD_SIZE || response > game.boardSize)) {
+            interface.prompt('Incorrect winning pattern length!')
+            return Promise.reject()
+        }
+        if (response) {
+            game.patternLength = response
+        }
         return game
     })
 }

@@ -20,7 +20,6 @@ const validateInputs = ({answer, validResponses = null, isNumber}) => {
         }
     }
 
-    // console.log({isValid, response})
     return {isValid, response}
 }
 
