@@ -1,7 +1,9 @@
 const checkWinner = ({board, playerOne, playerTwo, patternLength}) => {
     let winner = false
 
+    loop1:
     for (let row = 0; row < board.length; row++) {
+        loop2:
         for (let column = 0; column < board[row].length; column++) {
             const checkHorizontal = column <= (board[row].length - patternLength)
             const checkVertical =  row <= (board.length - patternLength)
@@ -24,11 +26,8 @@ const checkWinner = ({board, playerOne, playerTwo, patternLength}) => {
             }
 
             if (winner) {
-                break
+                break loop1
             }
-        }
-        if (winner) {
-            break
         }
     }
 
