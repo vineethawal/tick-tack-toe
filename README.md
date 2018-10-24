@@ -8,4 +8,5 @@
 
 ### Pre-requisites
 
+Git
 Node 8+
