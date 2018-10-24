@@ -58,7 +58,6 @@ const setupGame = () => {
         if (response) {
             game.patternLength = response
         }
-        console.log(game)
         return game
     })
 }
