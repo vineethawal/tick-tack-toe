@@ -8,8 +8,8 @@ const cli = readline.createInterface({
 
 const interface = {}
 
-interface.question = ({body, defaults = '', validResponses = null, isNumber = false, retries = 0} = {}) => {
-    ++retries
+interface.question = ({body, defaults = '', validResponses = null, isNumber = false, retries = MAX_RETRIES} = {}) => {
+    --retries
     return new Promise ((resolve, reject) => {
         cli.question(body + '\n' + (defaults && `Default: ${defaults}\n`), (answer) => {
 
@@ -21,8 +21,8 @@ interface.question = ({body, defaults = '', validResponses = null, isNumber = fa
 
             if (validation.isValid) {
                 resolve(validation.response)
-            } else if (retries <= MAX_RETRIES) {
-                interface.prompt(`Incorrect response, please re-enter (retry no. ${retries})`)
+            } else if (retries > 0) {
+                interface.prompt(`Incorrect response, please re-enter (Remaining tries: ${retries})`)
                 interface.question({body, defaults, validResponses, isNumber, retries: retries}).then(resolve, reject)
             } else {
                 interface.prompt('Max retries exhausted, bye!')

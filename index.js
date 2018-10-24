@@ -6,8 +6,6 @@ const playGame = require('./flows/playGame')
 
 interface.prompt('Lets play tick-tac-toe!!')
 
-
-
 const play = () => {
     setupGame()
         .then(playGame)
@@ -15,7 +13,7 @@ const play = () => {
             return interface.question({
                 body: 'Play a new game?',
                 validResponses: ['yes', 'no'],
-                defaults: 'no',
+                defaults: 'yes',
             })
         })
         .then((playAgain) => {

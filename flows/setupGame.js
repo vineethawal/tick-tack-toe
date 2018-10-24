@@ -40,11 +40,16 @@ const setupGame = () => {
 
         game.board = initBoard(game.boardSize)
 
-        return interface.question({
-            body: `Enter winning pattern length (Min. ${MIN_BOARD_SIZE}, Max. ${game.boardSize}):`,
-            defaults: game.patternLength,
-            isNumber: true,
-        })
+        if (game.boardSize > MIN_BOARD_SIZE) {
+            return interface.question({
+                body: `Enter winning pattern length (Min. ${MIN_BOARD_SIZE}, Max. ${game.boardSize}):`,
+                defaults: game.patternLength,
+                isNumber: true,
+            })
+        } else {
+            return null
+        }
+
     }).then((response) => {
         if (response && (response < MIN_BOARD_SIZE || response > game.boardSize)) {
             interface.prompt('Incorrect winning pattern length!')
@@ -53,6 +58,7 @@ const setupGame = () => {
         if (response) {
             game.patternLength = response
         }
+        console.log(game)
         return game
     })
 }

@@ -7,7 +7,7 @@ const checkWinner = ({board, playerOne, playerTwo, patternLength}) => {
         for (let column = 0; column < board[row].length; column++) {
             const checkHorizontal = column <= (board[row].length - patternLength)
             const checkVertical =  row <= (board.length - patternLength)
-            const checkBackwardHorizontal = column >= patternLength
+            const checkBackwardHorizontal = column >= (patternLength - 1)
 
             if (checkHorizontal) {
                 winner = performHorizontalCheck({board, playerOne, playerTwo, patternLength, row, column})
